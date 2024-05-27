@@ -1,0 +1,10 @@
+1. matchmaking
+
+- Import NetCode for Gameobjects
+- Read and implement matchmaking from doc
+
+
+
+2. player movement
+3. platforms like explained in the doc
+4. first mode rules as explained in the doc
