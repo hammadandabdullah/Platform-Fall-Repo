@@ -1,7 +1,10 @@
 using UnityEngine;
+using Unity.Netcode;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : NetworkBehaviour
 {
+    public Animator anim;
+
     public float speed = 5f;
     public float rotationSpeed = 720f; // Speed at which the player rotates to face the movement direction
 
@@ -32,14 +35,26 @@ public class PlayerMovement : MonoBehaviour
         jumpTimeCounter = jumpTime;
     }
 
+    public override void OnNetworkSpawn()
+    {
+        if(IsOwner)
+            transform.position = SpawnPoints.Instance.spawnPoints[Random.Range(0, SpawnPoints.Instance.spawnPoints.Length)].position;
+    }
+
     void Update()
     {
+        if (!IsOwner) return;
+
         // Get input from the user
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
 
         // Calculate the movement direction
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+
+        //Set Animation
+        float blend = movement.normalized.magnitude;
+        anim.SetFloat("Blend", blend);
 
         // Apply the movement to the player
         transform.Translate(movement * speed * Time.deltaTime, Space.World);
@@ -53,7 +68,8 @@ public class PlayerMovement : MonoBehaviour
 
         // Jumping logic
         //determines whether our bool, grounded, is true or false by seeing if our groundcheck overlaps something on the ground layer
-        grounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
+        Collider[] overLapSpheresColliders = Physics.OverlapSphere(groundCheck.position, groundCheckRadius, whatIsGround);
+        grounded = overLapSpheresColliders.Length > 0;
 
         //if we are grounded...
         if (grounded)
@@ -65,6 +81,8 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!IsOwner) return;
+
         //I placed this code in FixedUpdate because we are using phyics to move.
         if (Input.GetKeyDown(KeyCode.Space))
         {

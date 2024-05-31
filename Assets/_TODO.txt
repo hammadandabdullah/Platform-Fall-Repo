@@ -1,13 +1,4 @@
 1. [DONE] matchmaking
-2. player movement
-
-- Movement
-- Jumping 
-- Camera Movement
-- Animation Sync
-- Should Spawn on predefined positions and shouldn't merge
-
-
-
+2. [DONE] player movement
 3. platforms like explained in the doc
 4. first mode rules as explained in the doc
