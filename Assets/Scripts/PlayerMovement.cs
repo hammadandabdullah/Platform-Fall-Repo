@@ -28,6 +28,8 @@ public class PlayerMovement : NetworkBehaviour
     public Transform groundCheck;
     public float groundCheckRadius;
 
+    public Transform camTransform;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -37,37 +39,18 @@ public class PlayerMovement : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        if(IsOwner)
+        if (IsOwner)
+        {
             transform.position = SpawnPoints.Instance.spawnPoints[Random.Range(0, SpawnPoints.Instance.spawnPoints.Length)].position;
+        }
     }
 
     void Update()
     {
         if (!IsOwner) return;
 
-        // Get input from the user
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
+        HandleMovement();
 
-        // Calculate the movement direction
-        Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-
-        //Set Animation
-        float blend = movement.normalized.magnitude;
-        anim.SetFloat("Blend", blend);
-
-        // Apply the movement to the player
-        transform.Translate(movement * speed * Time.deltaTime, Space.World);
-
-        // If there is some movement, update the player's rotation
-        if (movement != Vector3.zero)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(movement);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-        }
-
-        // Jumping logic
-        //determines whether our bool, grounded, is true or false by seeing if our groundcheck overlaps something on the ground layer
         Collider[] overLapSpheresColliders = Physics.OverlapSphere(groundCheck.position, groundCheckRadius, whatIsGround);
         grounded = overLapSpheresColliders.Length > 0;
 
@@ -114,6 +97,38 @@ public class PlayerMovement : NetworkBehaviour
             stoppedJumping = true;
         }
     }
+
+    /////
+    private Vector3 movementDirection;
+    void HandleMovement()
+    {
+        // Get input from the player
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+
+        // Calculate the movement direction based on input
+        movementDirection = new Vector3(horizontalInput, 0, verticalInput).normalized;
+
+        //Set Animation
+        float blend = movementDirection.magnitude;
+        anim.SetFloat("Blend", blend);
+
+        // If there is any movement input
+        if (movementDirection.magnitude >= 0.1f)
+        {
+            // Determine the target rotation based on the camera's forward direction
+            float targetAngle = Mathf.Atan2(movementDirection.x, movementDirection.z) * Mathf.Rad2Deg + camTransform.eulerAngles.y;
+            Quaternion targetRotation = Quaternion.Euler(0, targetAngle, 0);
+
+            // Rotate the player smoothly to face the target direction
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+            // Move the player in the direction it's currently facing
+            Vector3 moveDirection = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
+            transform.Translate(moveDirection * speed * Time.deltaTime, Space.World);
+        }
+    }
+    /////
 
     private void OnDrawGizmosSelected()
     {

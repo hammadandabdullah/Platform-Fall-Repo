@@ -1,4 +1,21 @@
 1. [DONE] matchmaking
 2. [DONE] player movement
+
+
 3. platforms like explained in the doc
 4. first mode rules as explained in the doc
+
+- [DONE] Camera Controller like Fall Guys
+- [DONE] Test with Four platforms which you can jump on. They'll start shaking and after a few seconds they'll be gone
+- You lose if you reach the down limit before the other player
+- You win
+if other player has lost
+
+
+- Player should always spawn on unique positions: Should Spawn according to number they join. 
+	e.g first one spawn on first spawn point
+
+
+
+
+
