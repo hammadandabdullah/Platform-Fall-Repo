@@ -5,21 +5,41 @@ using Unity.Netcode;
 
 public class VibratingPlatform : NetworkBehaviour
 {
-    [SerializeField] private bool canVibrate = true;
+    public static bool canVibrate = false;
     private float vibrationTime = 5f;
+    private float respawnTime = 2f;
     private Animator anim;
+    private bool collided = false;
+    private bool isVibrating = false;
+    private MeshRenderer meshRenderer;
+    private MeshCollider meshCollider;
 
     void Start()
     {
         anim = GetComponent<Animator>();
+        meshRenderer = GetComponent<MeshRenderer>();
+        meshCollider = GetComponent<MeshCollider>();
+        canVibrate = false;
+    }
+
+    private void Update()
+    {
+        if (collided && canVibrate && !isVibrating)
+        {
+            StartVibratingRpc(true);
+            collided = false;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player") && canVibrate)
+        if (collision.gameObject.CompareTag("Player"))
         {
-            // Client -> Server because PingRpc sends to Server
-            StartVibratingRpc(true);
+            collided = true;
+            if (canVibrate)
+            {
+                StartVibratingRpc(true);
+            }
         }
     }
 
@@ -28,37 +48,20 @@ public class VibratingPlatform : NetworkBehaviour
     {
         anim.SetBool("vibration", canVibrate);
         Invoke(nameof(TurnOffPlatform), vibrationTime);
+        Invoke(nameof(TurnOnPlatform), vibrationTime + respawnTime);
+        isVibrating = true;
     }
-
-/*    [Rpc(SendTo.Server)]
-    private void StartVibratingRpc(bool canVibrate)
-    {
-        StartVibratingClientRpc(canVibrate);
-    }
-
-    [Rpc(SendTo.NotServer)]
-    private void StartVibratingClientRpc(bool canVibrate)
-    {
-        StartVibrating(canVibrate);
-    }*/
 
     private void TurnOffPlatform()
     {
-        gameObject.SetActive(false);
+        meshRenderer.enabled = false;
+        meshCollider.enabled = false;
     }
 
-    [Rpc(SendTo.Server)]
-    public void PingRpc(int pingCount)
+    private void TurnOnPlatform()
     {
-        // Server -> Clients because PongRpc sends to NotServer
-        // Note: This will send to all clients.
-        // Sending to the specific client that requested the pong will be discussed in the next section.
-        PongRpc(pingCount, "PONG!");
-    }
-
-    [Rpc(SendTo.NotServer)]
-    void PongRpc(int pingCount, string message)
-    {
-        Debug.Log($"Received pong from server for ping {pingCount} and message {message}");
+        meshRenderer.enabled = true;
+        meshCollider.enabled = true;
+        anim.SetBool("vibration", false);
     }
 }

@@ -3,6 +3,7 @@ using Unity.Netcode;
 
 public class PlayerMovement : NetworkBehaviour
 {
+    public static bool canMove = false;
     public Animator anim;
 
     public float speed = 5f;
@@ -35,6 +36,7 @@ public class PlayerMovement : NetworkBehaviour
         rb = GetComponent<Rigidbody>();
         //sets the jumpCounter to whatever we set our jumptime to in the editor
         jumpTimeCounter = jumpTime;
+        canMove = false;
     }
 
     public override void OnNetworkSpawn()
@@ -42,12 +44,14 @@ public class PlayerMovement : NetworkBehaviour
         if (IsOwner)
         {
             transform.position = SpawnPoints.Instance.spawnPoints[Random.Range(0, SpawnPoints.Instance.spawnPoints.Length)].position;
+            GameManager.Instance.SetActiveCountDownTimer(true);
         }
     }
 
     void Update()
     {
         if (!IsOwner) return;
+        if (!canMove) return;
 
         HandleMovement();
 
@@ -99,7 +103,6 @@ public class PlayerMovement : NetworkBehaviour
     }
 
     /////
-    private Vector3 movementDirection;
     void HandleMovement()
     {
         // Get input from the player
@@ -107,9 +110,9 @@ public class PlayerMovement : NetworkBehaviour
         float verticalInput = Input.GetAxis("Vertical");
 
         // Calculate the movement direction based on input
-        movementDirection = new Vector3(horizontalInput, 0, verticalInput).normalized;
+        Vector3 movementDirection = new Vector3(horizontalInput, 0, verticalInput).normalized;
 
-        //Set Animation
+        // Set Animation
         float blend = movementDirection.magnitude;
         anim.SetFloat("Blend", blend);
 
@@ -121,13 +124,42 @@ public class PlayerMovement : NetworkBehaviour
             Quaternion targetRotation = Quaternion.Euler(0, targetAngle, 0);
 
             // Rotate the player smoothly to face the target direction
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            rb.MoveRotation(Quaternion.RotateTowards(rb.rotation, targetRotation, rotationSpeed * Time.deltaTime));
 
             // Move the player in the direction it's currently facing
             Vector3 moveDirection = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
-            transform.Translate(moveDirection * speed * Time.deltaTime, Space.World);
+            rb.MovePosition(rb.position + moveDirection * speed * Time.deltaTime);
         }
     }
+    /*    private Vector3 movementDirection;
+        void HandleMovement()
+        {
+            // Get input from the player
+            float horizontalInput = Input.GetAxis("Horizontal");
+            float verticalInput = Input.GetAxis("Vertical");
+
+            // Calculate the movement direction based on input
+            movementDirection = new Vector3(horizontalInput, 0, verticalInput).normalized;
+
+            //Set Animation
+            float blend = movementDirection.magnitude;
+            anim.SetFloat("Blend", blend);
+
+            // If there is any movement input
+            if (movementDirection.magnitude >= 0.1f)
+            {
+                // Determine the target rotation based on the camera's forward direction
+                float targetAngle = Mathf.Atan2(movementDirection.x, movementDirection.z) * Mathf.Rad2Deg + camTransform.eulerAngles.y;
+                Quaternion targetRotation = Quaternion.Euler(0, targetAngle, 0);
+
+                // Rotate the player smoothly to face the target direction
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+                // Move the player in the direction it's currently facing
+                Vector3 moveDirection = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
+                transform.Translate(moveDirection * speed * Time.deltaTime, Space.World);
+            }
+        }*/
     /////
 
     private void OnDrawGizmosSelected()

@@ -22,12 +22,14 @@ public class UIManager : MonoBehaviour
 
     public void ShowWinPanel()
     {
-        winPanel.SetActive(true);
+        if (!losePanel.activeSelf)
+            winPanel.SetActive(true);
     }
 
     public void ShowLosePanel()
     {
-        losePanel.SetActive(true);
+        if(!winPanel.activeSelf)
+            losePanel.SetActive(true);
     }
 
     public void RestartGame()

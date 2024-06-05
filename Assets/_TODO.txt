@@ -2,18 +2,23 @@
 2. [DONE] player movement
 
 
-3. platforms like explained in the doc
-4. first mode rules as explained in the doc
+3. [DONE] platforms like explained in the doc
+4. [DONE] first mode rules as explained in the doc
+___________
+BUGS:
 
-- [DONE] Camera Controller like Fall Guys
-- [DONE] Test with Four platforms which you can jump on. They'll start shaking and after a few seconds they'll be gone
-- You lose if you reach the down limit before the other player
-- You win
-if other player has lost
+- [DONE] level should start by 1,2,3 and starting platform should fall as well:
+	- Initially player can't move
+	- Initially platform can't shake
+	- Countdown will start when 2 players have joined
+	- After countdown complete: player can move and platform can shake
 
 
-- Player should always spawn on unique positions: Should Spawn according to number they join. 
-	e.g first one spawn on first spawn point
+
+- [DONE] Jump sometimes misses
+- [DONE] platforms should respawn as well
+- [DONE] the shaking of platforms should be such that you can jump properly
+- [DONE] Players should not go inside eachother
 
 
 
