@@ -8,7 +8,6 @@ public class GameManager : NetworkBehaviour
     public static GameManager Instance;
 
     [SerializeField] private TextMeshProUGUI countDownText;
-    [SerializeField] private GameObject player;
 
     private float startTime;
     private float currentServerTime;
@@ -61,7 +60,7 @@ public class GameManager : NetworkBehaviour
         if(countDown <= 0)
         {
             countDownText.gameObject.SetActive(false);
-            PlayerMovement.canMove = true;
+            PlayerInitialPosition.canMove = true;
             VibratingPlatform.canVibrate = true;
         }
     }

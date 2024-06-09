@@ -19,7 +19,7 @@ public class VibratingPlatform : NetworkBehaviour
         anim = GetComponent<Animator>();
         meshRenderer = GetComponent<MeshRenderer>();
         meshCollider = GetComponent<MeshCollider>();
-        canVibrate = false;
+        canVibrate = true;
     }
 
     private void Update()
@@ -38,6 +38,7 @@ public class VibratingPlatform : NetworkBehaviour
             collided = true;
             if (canVibrate)
             {
+                Debug.Log("canVibrate");
                 StartVibratingRpc(true);
             }
         }
@@ -46,10 +47,15 @@ public class VibratingPlatform : NetworkBehaviour
     [Rpc(SendTo.Everyone)]
     private void StartVibratingRpc(bool canVibrate)
     {
+        Debug.Log("StartVibratingRpc");
         anim.SetBool("vibration", canVibrate);
-        Invoke(nameof(TurnOffPlatform), vibrationTime);
-        Invoke(nameof(TurnOnPlatform), vibrationTime + respawnTime);
-        isVibrating = true;
+
+        if (!isVibrating)
+        {
+            Invoke(nameof(TurnOffPlatform), vibrationTime);
+            Invoke(nameof(TurnOnPlatform), vibrationTime + respawnTime);
+            isVibrating = true;
+        }
     }
 
     private void TurnOffPlatform()
@@ -63,5 +69,8 @@ public class VibratingPlatform : NetworkBehaviour
         meshRenderer.enabled = true;
         meshCollider.enabled = true;
         anim.SetBool("vibration", false);
+
+        isVibrating = false;
+        collided = false;
     }
 }

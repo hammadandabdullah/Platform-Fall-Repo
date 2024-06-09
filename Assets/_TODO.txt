@@ -1,26 +1,6 @@
-1. [DONE] matchmaking
-2. [DONE] player movement
+- make player movement as smooth as possible (includes jumping as well)
+- decrease shaking of platforms and make it as smooth as possible
+- if any animation or sound required to add. add that as well
+- bots for first mode
 
-
-3. [DONE] platforms like explained in the doc
-4. [DONE] first mode rules as explained in the doc
-___________
-BUGS:
-
-- [DONE] level should start by 1,2,3 and starting platform should fall as well:
-	- Initially player can't move
-	- Initially platform can't shake
-	- Countdown will start when 2 players have joined
-	- After countdown complete: player can move and platform can shake
-
-
-
-- [DONE] Jump sometimes misses
-- [DONE] platforms should respawn as well
-- [DONE] the shaking of platforms should be such that you can jump properly
-- [DONE] Players should not go inside eachother
-
-
-
-
-
+-INITIALLY PLAYER AND PLATFORM OFF

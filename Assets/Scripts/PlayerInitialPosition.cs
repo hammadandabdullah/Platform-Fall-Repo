@@ -1,42 +1,47 @@
 using UnityEngine;
 using Unity.Netcode;
 
-public class PlayerMovement : NetworkBehaviour
+public class PlayerInitialPosition : NetworkBehaviour
 {
     public static bool canMove = false;
-    public Animator anim;
+    /* public Animator anim;
 
-    public float speed = 5f;
-    public float rotationSpeed = 720f; // Speed at which the player rotates to face the movement direction
+     public float speed = 5f;
+     public float rotationSpeed = 720f; // Speed at which the player rotates to face the movement direction
 
 
-    public float jumpForce;
-    public float jumpTime;
-    public float jumpTimeCounter;
-    /*this bool is to tell us whether you are on the ground or not
-     * the layermask lets you select a layer to be ground; you will need to create a layer named ground(or whatever you like) and assign your
-     * ground objects to this layer.
-     * The stoppedJumping bool lets us track when the player stops jumping.*/
-    public bool grounded;
-    public LayerMask whatIsGround;
-    public bool stoppedJumping;
-    private Rigidbody rb;
+     public float jumpForce;
+     public float jumpTime;
+     public float jumpTimeCounter;
+     *//*this bool is to tell us whether you are on the ground or not
+      * the layermask lets you select a layer to be ground; you will need to create a layer named ground(or whatever you like) and assign your
+      * ground objects to this layer.
+      * The stoppedJumping bool lets us track when the player stops jumping.*//*
+     public bool grounded;
+     public LayerMask whatIsGround;
+     public bool stoppedJumping;
+     private Rigidbody rb;
 
-    /*the public transform is how you will detect whether we are touching the ground.
-     * Add an empty game object as a child of your player and position it at your feet, where you touch the ground.
-     * the float groundCheckRadius allows you to set a radius for the groundCheck, to adjust the way you interact with the ground*/
+     *//*the public transform is how you will detect whether we are touching the ground.
+      * Add an empty game object as a child of your player and position it at your feet, where you touch the ground.
+      * the float groundCheckRadius allows you to set a radius for the groundCheck, to adjust the way you interact with the ground*//*
 
-    public Transform groundCheck;
-    public float groundCheckRadius;
+     public Transform groundCheck;
+     public float groundCheckRadius;
 
-    public Transform camTransform;
+     public Transform camTransform;*/
+
+    /*    void Start()
+        {
+            rb = GetComponent<Rigidbody>();
+            //sets the jumpCounter to whatever we set our jumptime to in the editor
+            jumpTimeCounter = jumpTime;
+            canMove = false;
+        }*/
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        //sets the jumpCounter to whatever we set our jumptime to in the editor
-        jumpTimeCounter = jumpTime;
-        canMove = false;
+        canMove = true;
     }
 
     public override void OnNetworkSpawn()
@@ -48,7 +53,7 @@ public class PlayerMovement : NetworkBehaviour
         }
     }
 
-    void Update()
+   /* void Update()
     {
         if (!IsOwner) return;
         if (!canMove) return;
@@ -131,7 +136,7 @@ public class PlayerMovement : NetworkBehaviour
             rb.MovePosition(rb.position + moveDirection * speed * Time.deltaTime);
         }
     }
-    /*    private Vector3 movementDirection;
+    *//*    private Vector3 movementDirection;
         void HandleMovement()
         {
             // Get input from the player
@@ -159,12 +164,12 @@ public class PlayerMovement : NetworkBehaviour
                 Vector3 moveDirection = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
                 transform.Translate(moveDirection * speed * Time.deltaTime, Space.World);
             }
-        }*/
+        }*//*
     /////
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
-    }
+    }*/
 }
