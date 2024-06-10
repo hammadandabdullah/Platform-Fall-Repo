@@ -3756,7 +3756,7 @@ Transform:
   m_GameObject: {fileID: 5144045128972795409}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3774,7 +3774,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 084c01ab381b9da4082c1f84cf70751b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceThreshold: 0.15
+  distanceThreshold: 0.5
   isGrounded: 0
 --- !u!1 &5177950483609158148
 GameObject:
@@ -5574,6 +5574,7 @@ GameObject:
   - component: {fileID: 4068743567601391565}
   - component: {fileID: 8279993802624655823}
   - component: {fileID: 3946062972606457671}
+  - component: {fileID: 6030907594167864712}
   - component: {fileID: 3273463933943821677}
   - component: {fileID: 4547133008208865561}
   m_Layer: 0
@@ -5697,6 +5698,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97fca36bd81de7c4cafce7bbf02ca611, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 7518531467403153799}
   speed: 5
   canRun: 1
   runSpeed: 9
@@ -5715,6 +5717,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpStrength: 3
   groundCheck: {fileID: 5289011748056614882}
+--- !u!114 &6030907594167864712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7406129381646940046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2c837acb4a135b4099cb044ec2d392a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3273463933943821677
 MonoBehaviour:
   m_ObjectHideFlags: 0

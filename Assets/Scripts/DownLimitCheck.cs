@@ -19,11 +19,13 @@ public class DownLimitCheck : NetworkBehaviour
     public void Lose()
     {
         UIManager.Instance.ShowLosePanel();
+        PlayerInitialPosition.canMove = false;
     }
 
     [Rpc(SendTo.NotMe)]
     public void WinOthersRpc()
     {
         UIManager.Instance.ShowWinPanel();
+        PlayerInitialPosition.canMove = false;
     }
 }

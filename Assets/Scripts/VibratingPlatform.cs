@@ -19,7 +19,7 @@ public class VibratingPlatform : NetworkBehaviour
         anim = GetComponent<Animator>();
         meshRenderer = GetComponent<MeshRenderer>();
         meshCollider = GetComponent<MeshCollider>();
-        canVibrate = true;
+        canVibrate = false;
     }
 
     private void Update()

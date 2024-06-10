@@ -4,6 +4,7 @@ using Unity.Netcode;
 
 public class FirstPersonMovement : NetworkBehaviour
 {
+    public Animator anim;
     public float speed = 5;
 
     [Header("Running")]
@@ -44,5 +45,9 @@ public class FirstPersonMovement : NetworkBehaviour
 
         // Apply movement.
         rigidbody.velocity = transform.rotation * new Vector3(targetVelocity.x, rigidbody.velocity.y, targetVelocity.y);
+
+        Vector3 movementDirection = targetVelocity.normalized;
+        float blend = movementDirection.magnitude;
+        anim.SetFloat("Blend", blend);
     }
 }

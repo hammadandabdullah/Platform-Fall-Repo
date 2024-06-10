@@ -41,7 +41,7 @@ public class PlayerInitialPosition : NetworkBehaviour
 
     void Start()
     {
-        canMove = true;
+        canMove = false;
     }
 
     public override void OnNetworkSpawn()

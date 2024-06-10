@@ -2,5 +2,3 @@
 - decrease shaking of platforms and make it as smooth as possible
 - if any animation or sound required to add. add that as well
 - bots for first mode
-
--INITIALLY PLAYER AND PLATFORM OFF
