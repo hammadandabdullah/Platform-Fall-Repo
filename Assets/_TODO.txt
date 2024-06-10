@@ -1,4 +1,8 @@
+
+- bots for first mode
+- earth quake sound for platform
+
+________________________
 - make player movement as smooth as possible (includes jumping as well)
 - decrease shaking of platforms and make it as smooth as possible
 - if any animation or sound required to add. add that as well
-- bots for first mode
