@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class FirstPersonAudio : MonoBehaviour
 {
-    public FirstPersonMovement character;
+    public CharacterMovement character;
     public GroundCheck groundCheck;
 
     [Header("Step")]
@@ -20,7 +20,7 @@ public class FirstPersonAudio : MonoBehaviour
     public AudioClip[] landingSFX;
 
     [Header("Jump")]
-    public Jump jump;
+    public CharacterJump jump;
     public AudioSource jumpAudio;
     public AudioClip[] jumpSFX;
 
@@ -35,14 +35,14 @@ public class FirstPersonAudio : MonoBehaviour
     void Reset()
     {
         // Setup stuff.
-        character = GetComponentInParent<FirstPersonMovement>();
+        character = GetComponentInParent<CharacterMovement>();
         groundCheck = (transform.parent ?? transform).GetComponentInChildren<GroundCheck>();
         stepAudio = GetOrCreateAudioSource("Step Audio");
         runningAudio = GetOrCreateAudioSource("Running Audio");
         landingAudio = GetOrCreateAudioSource("Landing Audio");
 
         // Setup jump audio.
-        jump = GetComponentInParent<Jump>();
+        jump = GetComponentInParent<CharacterJump>();
         if (jump)
         {
             jumpAudio = GetOrCreateAudioSource("Jump audio");

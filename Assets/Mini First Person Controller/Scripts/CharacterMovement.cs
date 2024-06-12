@@ -2,7 +2,7 @@
 using UnityEngine;
 using Unity.Netcode;
 
-public class FirstPersonMovement : NetworkBehaviour
+public class CharacterMovement : NetworkBehaviour
 {
     public Animator anim;
     public float speed = 5;
@@ -11,12 +11,14 @@ public class FirstPersonMovement : NetworkBehaviour
     public bool canRun = true;
     public bool IsRunning { get; private set; }
     public float runSpeed = 9;
-    public KeyCode runningKey = KeyCode.LeftShift;
+    //public KeyCode runningKey = KeyCode.LeftShift;
 
     Rigidbody rigidbody;
     /// <summary> Functions to override movement speed. Will use the last added override. </summary>
     public List<System.Func<float>> speedOverrides = new List<System.Func<float>>();
 
+    private float inputX;
+    private float inputY;
 
 
     void Awake()
@@ -28,10 +30,10 @@ public class FirstPersonMovement : NetworkBehaviour
     void FixedUpdate()
     {
         if (!IsOwner) return;
-        if (!PlayerInitialPosition.canMove) return;
+        //if (!CharacterInitialPosition.canMove) return;
 
         // Update IsRunning from input.
-        IsRunning = canRun && Input.GetKey(runningKey);
+        //IsRunning = canRun && Input.GetKey(runningKey);
 
         // Get targetMovingSpeed.
         float targetMovingSpeed = IsRunning ? runSpeed : speed;
@@ -41,7 +43,7 @@ public class FirstPersonMovement : NetworkBehaviour
         }
 
         // Get targetVelocity from input.
-        Vector2 targetVelocity =new Vector2( Input.GetAxis("Horizontal") * targetMovingSpeed, Input.GetAxis("Vertical") * targetMovingSpeed);
+        Vector2 targetVelocity =new Vector2( inputX * targetMovingSpeed, inputY * targetMovingSpeed);
 
         // Apply movement.
         rigidbody.velocity = transform.rotation * new Vector3(targetVelocity.x, rigidbody.velocity.y, targetVelocity.y);
@@ -49,5 +51,15 @@ public class FirstPersonMovement : NetworkBehaviour
         Vector3 movementDirection = targetVelocity.normalized;
         float blend = movementDirection.magnitude;
         anim.SetFloat("Blend", blend);
+    }
+
+    public void SetInputX(float givenX)
+    {
+        inputX = givenX;
+    }
+
+    public void SetInputY(float givenY)
+    {
+        inputY = givenY;
     }
 }

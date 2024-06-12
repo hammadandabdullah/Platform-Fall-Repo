@@ -5,10 +5,11 @@ using Unity.Netcode;
 
 public class DownLimitCheck : NetworkBehaviour
 {
+    [SerializeField] private bool isPlayer;
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("DownLimit"))
+        if (collision.gameObject.CompareTag("DownLimit") && isPlayer)
         {
             Lose();
             WinOthersRpc();

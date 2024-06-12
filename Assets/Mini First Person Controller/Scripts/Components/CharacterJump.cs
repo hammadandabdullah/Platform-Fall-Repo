@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Unity.Netcode;
 
-public class Jump : NetworkBehaviour
+public class CharacterJump : NetworkBehaviour
 {
     Rigidbody rigidbody;
     public float jumpStrength = 2;
@@ -10,6 +10,8 @@ public class Jump : NetworkBehaviour
     [SerializeField, Tooltip("Prevents jumping when the transform is in mid-air.")]
     GroundCheck groundCheck;
 
+    private bool jumpInputApplied = false;
+    private bool isJumping = false;
 
     void Reset()
     {
@@ -21,18 +23,39 @@ public class Jump : NetworkBehaviour
     {
         // Get rigidbody.
         rigidbody = GetComponent<Rigidbody>();
+
+        if (GetComponent<BotDecisionMaker>())
+        {
+            jumpStrength /= 3;
+        }
     }
 
-    void LateUpdate()
+    void Update()
     {
         if (!IsOwner) return;
-        if (!PlayerInitialPosition.canMove) return;
+        //if (!CharacterInitialPosition.canMove) return;
 
         // Jump when the Jump button is pressed and we are on the ground.
-        if (Input.GetButtonDown("Jump") && (!groundCheck || groundCheck.isGrounded))
+
+        if (jumpInputApplied && (!groundCheck || groundCheck.isGrounded))
         {
             rigidbody.AddForce(Vector3.up * 100 * jumpStrength);
             Jumped?.Invoke();
+            isJumping = true;
+            jumpInputApplied = false;
+            Debug.Log("JUMP -- Jumping");
+        }
+        else
+        {
+            isJumping = false;
+        }
+    }
+
+    public void ApplyJump()
+    {
+        if (!isJumping)
+        {
+            jumpInputApplied = true;
         }
     }
 }

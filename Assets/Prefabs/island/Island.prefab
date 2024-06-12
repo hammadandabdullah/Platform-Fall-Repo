@@ -120,7 +120,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7666383c59b746e4eba48df2e171a9e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canVibrate: 0
 --- !u!95 &7173893825443321156
 Animator:
   serializedVersion: 5
@@ -187,7 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2567752871
+  GlobalObjectIdHash: 333062947
   InScenePlacedSourceGlobalObjectIdHash: 3371468274
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1

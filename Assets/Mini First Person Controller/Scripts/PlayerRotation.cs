@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Unity.Netcode;
 
-public class CameraMovement : NetworkBehaviour
+public class PlayerRotation : NetworkBehaviour
 {
     [SerializeField]
     Transform character;
@@ -11,11 +11,14 @@ public class CameraMovement : NetworkBehaviour
     Vector2 velocity;
     Vector2 frameVelocity;
 
+    private float inputX;
+    private float inputY;
+
 
     void Reset()
     {
         // Get the character from the FirstPersonMovement in parents.
-        character = GetComponentInParent<FirstPersonMovement>().transform;
+        character = GetComponentInParent<CharacterMovement>().transform;
     }
 
     void Start()
@@ -32,7 +35,7 @@ public class CameraMovement : NetworkBehaviour
     void Update()
     {
         // Get smooth velocity.
-        Vector2 mouseDelta = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+        Vector2 mouseDelta = new Vector2(inputX, inputY);
         Vector2 rawFrameVelocity = Vector2.Scale(mouseDelta, Vector2.one * sensitivity);
         frameVelocity = Vector2.Lerp(frameVelocity, rawFrameVelocity, 1 / smoothing);
         velocity += frameVelocity;
@@ -40,6 +43,16 @@ public class CameraMovement : NetworkBehaviour
 
         // Rotate camera up-down and controller left-right from velocity.
         character.localRotation = Quaternion.AngleAxis(velocity.x, Vector3.up);
+    }
+
+    public void SetInputX(float givenX)
+    {
+        inputX = givenX;
+    }
+
+    public void SetInputY(float givenY)
+    {
+        inputY = givenY;
     }
 }
 
