@@ -9,24 +9,31 @@ public class DownLimitCheck : NetworkBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("DownLimit") && isPlayer)
+        if (collision.gameObject.CompareTag("DownLimit"))
         {
-            Lose();
-            WinOthersRpc();
-            gameObject.SetActive(false);
+            if (isPlayer)
+            {
+                Lose();
+                WinOthersRpc();
+                gameObject.SetActive(false);
+            }
+            else if (IsServer) //If Bot and Is Server
+            {
+                GetComponent<NetworkObject>().Despawn();
+            }
         }
     }
 
     public void Lose()
     {
         UIManager.Instance.ShowLosePanel();
-        PlayerInitialPosition.canMove = false;
+        GameManager.canMove = false;
     }
 
     [Rpc(SendTo.NotMe)]
     public void WinOthersRpc()
     {
         UIManager.Instance.ShowWinPanel();
-        PlayerInitialPosition.canMove = false;
+        GameManager.canMove = false;
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpawnPoints : MonoBehaviour
 {
     public static SpawnPoints Instance;
-    public Transform[] spawnPoints;
+    private SpawnPoint[] spawnPoints;
 
     private void Awake()
     {
@@ -13,5 +13,12 @@ public class SpawnPoints : MonoBehaviour
         {
             Instance = this;
         }
+
+        spawnPoints = FindObjectsOfType<SpawnPoint>();
+    }
+
+    public Transform GetRandom()
+    {
+        return spawnPoints[Random.Range(0, spawnPoints.Length)].transform;
     }
 }

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PlayerEyes
   - DownLimit
+  - Platform
   layers:
   - Default
   - TransparentFX

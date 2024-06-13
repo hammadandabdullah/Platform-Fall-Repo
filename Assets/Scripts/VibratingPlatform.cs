@@ -5,9 +5,8 @@ using Unity.Netcode;
 
 public class VibratingPlatform : NetworkBehaviour
 {
-    public static bool canVibrate = false;
     private float vibrationTime = 5f;
-    private float respawnTime = 2f;
+    private float respawnTime = 1f;
     private Animator anim;
     private bool collided = false;
     private bool isVibrating = false;
@@ -20,12 +19,11 @@ public class VibratingPlatform : NetworkBehaviour
         anim = GetComponent<Animator>();
         meshRenderer = GetComponent<MeshRenderer>();
         meshCollider = GetComponent<MeshCollider>();
-        canVibrate = true;
     }
 
     private void Update()
     {
-        if (collided && canVibrate && !isVibrating)
+        if (collided && GameManager.canMove && !isVibrating)
         {
             StartVibratingRpc(true);
             collided = false;
@@ -37,9 +35,8 @@ public class VibratingPlatform : NetworkBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             collided = true;
-            if (canVibrate)
+            if (GameManager.canMove)
             {
-                Debug.Log("canVibrate");
                 StartVibratingRpc(true);
             }
         }
@@ -50,12 +47,12 @@ public class VibratingPlatform : NetworkBehaviour
     {
         anim.SetBool("vibration", canVibrate);
 
-/*        if (!isVibrating)
+        if (!isVibrating)
         {
-            Invoke(nameof(TurnOffPlatform), vibrationTime);
-            Invoke(nameof(TurnOnPlatform), vibrationTime + respawnTime);
+            //Invoke(nameof(TurnOffPlatform), vibrationTime);
+            //Invoke(nameof(TurnOnPlatform), vibrationTime + respawnTime);
             isVibrating = true;
-        }*/
+        }
     }
 
     private void TurnOffPlatform()
@@ -79,5 +76,10 @@ public class VibratingPlatform : NetworkBehaviour
     public bool IsActive()
     {
         return isActive;
+    }
+
+    public bool IsVibrating()
+    {
+        return isVibrating;
     }
 }

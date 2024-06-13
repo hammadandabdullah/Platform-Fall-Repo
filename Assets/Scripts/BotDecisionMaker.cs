@@ -5,13 +5,13 @@ using UnityEngine;
 public class BotDecisionMaker : MonoBehaviour
 {
     private InputHandler inputHandler;
+    private NearbyPlatformChecker nearbyPlatformChecker;
 
     [SerializeField] private float rotationSpeed;
     [SerializeField] private Transform gapChecker;
     [SerializeField] private float gapCheckerLength = 5f;
 
     private Transform platformToGo;
-    private NearbyPlatformChecker nearbyPlatformChecker;
 
     private void Start()
     {
@@ -53,19 +53,12 @@ public class BotDecisionMaker : MonoBehaviour
         }
     }
 
-    float delayToFindNewPlatform = 2f;
+    float delayToFindNewPlatform = 0.2f;
     private void FindActivePlatform()
     {
-        VibratingPlatform platform = nearbyPlatformChecker.GetPlatform();
-        if(platform == null)
-        {
-            Invoke(nameof(FindActivePlatform), delayToFindNewPlatform);
-        }
-        else if (platform.IsActive())
-        {
-            platformToGo = platform.transform;
-        }
-        else
+        platformToGo = nearbyPlatformChecker.GetPlatform();
+
+        if (platformToGo == null)
         {
             Invoke(nameof(FindActivePlatform), delayToFindNewPlatform);
         }

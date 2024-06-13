@@ -1,8 +1,10 @@
 
 => bots for first mode:
-- bots movement
-- 15 bots 
+- [DONE] bots movement
+- 13 bots + 2 players without network lag
 - you'll lose when hit down limit but will win when 5 people left, including bots
+
+=> Reset all scripts initial states
 
 
 - earth quake sound for platform

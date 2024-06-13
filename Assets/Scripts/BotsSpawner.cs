@@ -7,6 +7,7 @@ public class BotsSpawner : NetworkBehaviour
 {
     [SerializeField] private int totalBots = 15;
     [SerializeField] private GameObject botPrefab;
+    private int minimumPlayerCount = 2;
 
     public override void OnNetworkSpawn()
     {
@@ -15,7 +16,7 @@ public class BotsSpawner : NetworkBehaviour
             for (int i = 0; i < totalBots; i++)
             {
                 GameObject newBot = Instantiate(botPrefab);
-                newBot.transform.position = SpawnPoints.Instance.spawnPoints[Random.Range(0, SpawnPoints.Instance.spawnPoints.Length)].position;
+                newBot.transform.position = SpawnPoints.Instance.GetRandom().position;
                 newBot.GetComponent<NetworkObject>().Spawn();
             }
         }

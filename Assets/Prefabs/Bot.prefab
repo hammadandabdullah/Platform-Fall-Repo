@@ -207,7 +207,8 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: c4491e24bf73575499dbc9d343c6c741, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4068743567601391565, guid: 6fc6bda4809a575458ee87b5d195228e, type: 3}
     m_RemovedGameObjects:
     - {fileID: 6129937983058399844, guid: 6fc6bda4809a575458ee87b5d195228e, type: 3}
     m_AddedGameObjects:
@@ -220,7 +221,7 @@ PrefabInstance:
       addedObject: {fileID: 7353445551385891232}
     - targetCorrespondingSourceObject: {fileID: 7406129381646940046, guid: 6fc6bda4809a575458ee87b5d195228e, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4522336455184622713}
+      addedObject: {fileID: 2577108805168741217}
   m_SourcePrefab: {fileID: 100100000, guid: 6fc6bda4809a575458ee87b5d195228e, type: 3}
 --- !u!1 &1765803611622360928 stripped
 GameObject:
@@ -242,7 +243,7 @@ MonoBehaviour:
   rotationSpeed: 5
   gapChecker: {fileID: 1253374911473409236}
   gapCheckerLength: 5
---- !u!114 &4522336455184622713
+--- !u!114 &2577108805168741217
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -251,9 +252,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1765803611622360928}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 892893b4361e6ef4cacb201878e3bee7, type: 3}
+  m_Script: {fileID: 11500000, guid: 6eae2d83ceb9bd345b1810d97a93f02d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  platformLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  radius: 15
 --- !u!4 &4471037171832694130 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4632777911745369500, guid: 6fc6bda4809a575458ee87b5d195228e, type: 3}

@@ -33,7 +33,7 @@ public class CharacterJump : NetworkBehaviour
     void Update()
     {
         if (!IsOwner) return;
-        //if (!CharacterInitialPosition.canMove) return;
+        //if (!GameManager.canMove) return;
 
         // Jump when the Jump button is pressed and we are on the ground.
 
@@ -43,7 +43,6 @@ public class CharacterJump : NetworkBehaviour
             Jumped?.Invoke();
             isJumping = true;
             jumpInputApplied = false;
-            Debug.Log("JUMP -- Jumping");
         }
         else
         {

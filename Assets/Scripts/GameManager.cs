@@ -6,6 +6,7 @@ using TMPro;
 public class GameManager : NetworkBehaviour
 {
     public static GameManager Instance;
+    public static bool canMove = false;
 
     [SerializeField] private TextMeshProUGUI countDownText;
 
@@ -21,6 +22,8 @@ public class GameManager : NetworkBehaviour
         {
             Instance = this;
         }
+
+        canMove = true;
     }
 
     private void Update()
@@ -60,8 +63,7 @@ public class GameManager : NetworkBehaviour
         if(countDown <= 0)
         {
             countDownText.gameObject.SetActive(false);
-            PlayerInitialPosition.canMove = true;
-            VibratingPlatform.canVibrate = true;
+            canMove = true;
         }
     }
 

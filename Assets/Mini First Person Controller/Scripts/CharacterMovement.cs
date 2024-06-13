@@ -30,7 +30,7 @@ public class CharacterMovement : NetworkBehaviour
     void FixedUpdate()
     {
         if (!IsOwner) return;
-        //if (!CharacterInitialPosition.canMove) return;
+        //if (!GameManager.canMove) return;
 
         // Update IsRunning from input.
         //IsRunning = canRun && Input.GetKey(runningKey);
