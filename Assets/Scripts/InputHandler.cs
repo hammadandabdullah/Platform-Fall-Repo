@@ -9,7 +9,7 @@ public class InputHandler : NetworkBehaviour
 
     private CharacterJump jumpScript;
     private CharacterMovement movementScript;
-    private PlayerRotation playerRotationScript;
+    private CameraController playerRotationScript;
 
     private void Start()
     {
@@ -18,7 +18,7 @@ public class InputHandler : NetworkBehaviour
 
         if (isPlayer)
         {
-            playerRotationScript = GetComponentInChildren<PlayerRotation>();
+            playerRotationScript = GetComponentInChildren<CameraController>();
         }
     }
 

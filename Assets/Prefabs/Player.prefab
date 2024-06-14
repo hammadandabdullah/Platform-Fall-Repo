@@ -5071,6 +5071,8 @@ MonoBehaviour:
   character: {fileID: 4632777911745369500}
   sensitivity: 2
   smoothing: 1.5
+  minYLimit: -45
+  maxYLimit: -5
 --- !u!1 &6163440010790442922
 GameObject:
   m_ObjectHideFlags: 0
@@ -5695,6 +5697,7 @@ MonoBehaviour:
   speed: 5
   canRun: 1
   runSpeed: 9
+  groundCheck: {fileID: 0}
 --- !u!114 &3946062972606457671
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,15 +1,16 @@
 
-=> bots for first mode:
-- [DONE] bots movement
-- 13 bots + 2 players without network lag
-- you'll lose when hit down limit but will win when 5 people left, including bots
 
-=> Reset all scripts initial states
-
-
-- earth quake sound for platform
 
 ________________________
 - make player movement as smooth as possible (includes jumping as well)
 - decrease shaking of platforms and make it as smooth as possible
 - if any animation or sound required to add. add that as well
+- bots for first mode (13 bots + 2 players without network lag)
+- Fix: bot sticking to the edge of platform or any other wierd movmenet behaviour
+- Camera up/down as well
+- you'll lose when hit down limit but will only win when 5 people left, including bots
+- if player is standing on ground bot keeps getting into the player
+- earth quake sound for platform
+
+
+

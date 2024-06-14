@@ -12,6 +12,7 @@ public class BotDecisionMaker : MonoBehaviour
     [SerializeField] private float gapCheckerLength = 5f;
 
     private Transform platformToGo;
+    private float maxDistanceFromPlatformToGo = 2f;
 
     private void Start()
     {
@@ -38,7 +39,7 @@ public class BotDecisionMaker : MonoBehaviour
             transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
 
             //Movement
-            bool canGoForward = Vector3.Distance(transform.position, platformToGo.position) > 0.5f;
+            bool canGoForward = Vector3.Distance(transform.position, platformToGo.position) > maxDistanceFromPlatformToGo;
             inputHandler.SetBotMovement(canGoForward);
 
             //Jump

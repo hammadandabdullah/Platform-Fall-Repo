@@ -20,17 +20,23 @@ public class CharacterMovement : NetworkBehaviour
     private float inputX;
     private float inputY;
 
+    [SerializeField, Tooltip("Prevents jumping when the transform is in mid-air.")]
+    GroundCheck groundCheck;
+
 
     void Awake()
     {
         // Get the rigidbody on this.
         rigidbody = GetComponent<Rigidbody>();
+        groundCheck = GetComponentInChildren<GroundCheck>();
     }
 
     void FixedUpdate()
     {
         if (!IsOwner) return;
-        //if (!GameManager.canMove) return;
+        if (!GameManager.canMove) return;
+        bool notGroundedForSomeTime = IsNotGroundedForTime(2);
+        if (notGroundedForSomeTime) return;
 
         // Update IsRunning from input.
         //IsRunning = canRun && Input.GetKey(runningKey);
@@ -43,7 +49,7 @@ public class CharacterMovement : NetworkBehaviour
         }
 
         // Get targetVelocity from input.
-        Vector2 targetVelocity =new Vector2( inputX * targetMovingSpeed, inputY * targetMovingSpeed);
+        Vector2 targetVelocity = new Vector2( inputX * targetMovingSpeed, inputY * targetMovingSpeed);
 
         // Apply movement.
         rigidbody.velocity = transform.rotation * new Vector3(targetVelocity.x, rigidbody.velocity.y, targetVelocity.y);
@@ -51,6 +57,26 @@ public class CharacterMovement : NetworkBehaviour
         Vector3 movementDirection = targetVelocity.normalized;
         float blend = movementDirection.magnitude;
         anim.SetFloat("Blend", blend);
+    }
+
+    float notGroundedTimer = 0;
+    private bool IsNotGroundedForTime(float totalNotGroundedTime)
+    {
+        if (!groundCheck.isGrounded)
+        {
+            notGroundedTimer += Time.deltaTime;
+
+            if(notGroundedTimer >= totalNotGroundedTime)
+            {
+                return true;
+            }
+        }
+        else
+        {
+            notGroundedTimer = 0;
+        }
+
+        return false;
     }
 
     public void SetInputX(float givenX)

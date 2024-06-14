@@ -5,6 +5,8 @@ using Unity.Netcode;
 
 public class VibratingPlatform : NetworkBehaviour
 {
+    [SerializeField] private AudioSource audioSource;
+
     private float vibrationTime = 5f;
     private float respawnTime = 1f;
     private Animator anim;
@@ -28,6 +30,8 @@ public class VibratingPlatform : NetworkBehaviour
             StartVibratingRpc(true);
             collided = false;
         }
+
+        audioSource.enabled = isVibrating;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -49,8 +53,8 @@ public class VibratingPlatform : NetworkBehaviour
 
         if (!isVibrating)
         {
-            //Invoke(nameof(TurnOffPlatform), vibrationTime);
-            //Invoke(nameof(TurnOnPlatform), vibrationTime + respawnTime);
+            Invoke(nameof(TurnOffPlatform), vibrationTime);
+            Invoke(nameof(TurnOnPlatform), vibrationTime + respawnTime);
             isVibrating = true;
         }
     }

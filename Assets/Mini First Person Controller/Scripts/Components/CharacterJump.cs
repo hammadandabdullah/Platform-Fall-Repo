@@ -33,7 +33,7 @@ public class CharacterJump : NetworkBehaviour
     void Update()
     {
         if (!IsOwner) return;
-        //if (!GameManager.canMove) return;
+        if (!GameManager.canMove) return;
 
         // Jump when the Jump button is pressed and we are on the ground.
 

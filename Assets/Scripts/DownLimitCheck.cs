@@ -11,27 +11,36 @@ public class DownLimitCheck : NetworkBehaviour
     {
         if (collision.gameObject.CompareTag("DownLimit"))
         {
+            GameManager.Instance.DecrementPlayersCount();
+            int currentPlayersCount = GameManager.Instance.GetRemainingPlayers();
+
             if (isPlayer)
             {
-                Lose();
-                WinOthersRpc();
-                gameObject.SetActive(false);
+                UIManager.Instance.ShowLosePanel();
+                GameManager.canMove = false;
+
+                if (currentPlayersCount <= GameManager.minimumPlayersInFirstMode)
+                {
+                    ShowWinToPlayersRpc();
+                }
             }
-            else if (IsServer) //If Bot and Is Server
+            else
             {
-                GetComponent<NetworkObject>().Despawn();
+                if (currentPlayersCount <= GameManager.minimumPlayersInFirstMode)
+                {
+                    ShowWinToPlayersRpc();
+                }
+
+                if (IsServer)
+                {
+                    GetComponent<NetworkObject>().Despawn();
+                }
             }
         }
     }
 
-    public void Lose()
-    {
-        UIManager.Instance.ShowLosePanel();
-        GameManager.canMove = false;
-    }
-
-    [Rpc(SendTo.NotMe)]
-    public void WinOthersRpc()
+    [Rpc(SendTo.Everyone)]
+    public void ShowWinToPlayersRpc()
     {
         UIManager.Instance.ShowWinPanel();
         GameManager.canMove = false;

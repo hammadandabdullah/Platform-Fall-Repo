@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 33443772}
   - component: {fileID: 33443771}
   m_Layer: 5
-  m_Name: CountDownText
+  m_Name: TopText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2484,7 +2484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b9ef7fcf2aea034790ce03e67d35747, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countDownText: {fileID: 33443771}
+  topText: {fileID: 33443771}
 --- !u!1001 &1121761528
 PrefabInstance:
   m_ObjectHideFlags: 0
