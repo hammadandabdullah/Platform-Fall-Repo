@@ -7,7 +7,7 @@ public class PlayerInitialPosition : NetworkBehaviour
     {
         if (IsOwner)
         {
-            transform.position = SpawnPoints.Instance.GetRandom().position;
+            //transform.position = SpawnPoints.Instance.GetRandom().position;
             GameManager.Instance.SetActiveCountDownTimer(true);
         }
     }

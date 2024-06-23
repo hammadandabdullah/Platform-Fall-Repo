@@ -27,7 +27,7 @@ public class GameManager : NetworkBehaviour
             Instance = this;
         }
 
-        canMove = false;
+        canMove = true;
     }
 
     private void Update()

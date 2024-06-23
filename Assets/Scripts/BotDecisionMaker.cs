@@ -6,6 +6,7 @@ public class BotDecisionMaker : MonoBehaviour
 {
     private InputHandler inputHandler;
     private NearbyPlatformChecker nearbyPlatformChecker;
+    private NearbyPlayerChecker nearbyPlayerChecker;
 
     [SerializeField] private float rotationSpeed;
     [SerializeField] private Transform gapChecker;
@@ -18,6 +19,7 @@ public class BotDecisionMaker : MonoBehaviour
     {
         inputHandler = GetComponent<InputHandler>();
         nearbyPlatformChecker = GetComponent<NearbyPlatformChecker>();
+        nearbyPlayerChecker = GetComponent<NearbyPlayerChecker>();
 
         FindActivePlatform();
     }
@@ -51,6 +53,15 @@ public class BotDecisionMaker : MonoBehaviour
             {
                 FindActivePlatform();
             }
+
+            //Push
+            bool isPlayerInRange = nearbyPlayerChecker.IsPlayerInRange();
+            bool shouldPush = Random.Range(0, 2) == 0;
+
+            if (shouldPush)
+                inputHandler.SetBotPush(isPlayerInRange);
+            else
+                inputHandler.SetBotBlock(isPlayerInRange);
         }
     }
 

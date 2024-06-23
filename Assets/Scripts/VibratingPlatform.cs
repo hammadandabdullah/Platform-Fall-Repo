@@ -12,7 +12,7 @@ public class VibratingPlatform : NetworkBehaviour
     private float respawnTime = 1f;
     private Animator anim;
     private bool collided = false;
-    private bool isVibrating = false;
+    private bool isVibrating = true;
     private bool canGoDown = false;
     private bool isActive = true;
     private MeshRenderer meshRenderer;
@@ -30,7 +30,7 @@ public class VibratingPlatform : NetworkBehaviour
 
     private void Update()
     {
-        if (collided && GameManager.canMove && !isVibrating)
+/*        if (collided && GameManager.canMove && !isVibrating)
         {
             StartVibratingRpc(true);
             collided = false;
@@ -39,19 +39,19 @@ public class VibratingPlatform : NetworkBehaviour
         if (canGoDown)
         {
             transform.parent.position -= new Vector3(0, downSpeed * Time.deltaTime, 0);
-        }
+        }*/
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+/*        if (collision.gameObject.CompareTag("Player"))
         {
             collided = true;
             if (GameManager.canMove)
             {
                 StartVibratingRpc(true);
             }
-        }
+        }*/
     }
 
     [Rpc(SendTo.Everyone)]

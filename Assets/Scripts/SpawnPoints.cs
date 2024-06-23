@@ -21,4 +21,9 @@ public class SpawnPoints : MonoBehaviour
     {
         return spawnPoints[Random.Range(0, spawnPoints.Length)].transform;
     }
+
+    public Transform GetSpawnPoint(int i)
+    {
+        return spawnPoints[i].transform;
+    }
 }

@@ -11,7 +11,11 @@ public class CharacterMovement : NetworkBehaviour
     public bool canRun = true;
     public bool IsRunning { get; private set; }
     public float runSpeed = 9;
-    //public KeyCode runningKey = KeyCode.LeftShift;
+
+    [Space]
+    [Header("Push")]
+    [SerializeField] private float pushForce = 10f;
+    [SerializeField] private float getPushedForce = 10f;
 
     Rigidbody rigidbody;
     /// <summary> Functions to override movement speed. Will use the last added override. </summary>
@@ -87,5 +91,15 @@ public class CharacterMovement : NetworkBehaviour
     public void SetInputY(float givenY)
     {
         inputY = givenY;
+    }
+
+    public void ApplyPushForce()
+    {
+        rigidbody.AddForce(transform.forward * pushForce * Time.deltaTime, ForceMode.Impulse);
+    }
+
+    public void GetPushForce(Vector3 otherPlayerForward)
+    {
+        rigidbody.AddForce(otherPlayerForward * getPushedForce * Time.deltaTime, ForceMode.Impulse);
     }
 }

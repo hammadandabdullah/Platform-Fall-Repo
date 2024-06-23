@@ -10,11 +10,13 @@ public class InputHandler : NetworkBehaviour
     private CharacterJump jumpScript;
     private CharacterMovement movementScript;
     private CameraController playerRotationScript;
+    private PushAndBlockManager pushAndBlockScript;
 
     private void Start()
     {
         jumpScript = GetComponent<CharacterJump>();
         movementScript = GetComponent<CharacterMovement>();
+        pushAndBlockScript = GetComponent<PushAndBlockManager>();
 
         if (isPlayer)
         {
@@ -28,6 +30,7 @@ public class InputHandler : NetworkBehaviour
 
         if (isPlayer)
         {
+            //Movement
             movementScript.SetInputX(Input.GetAxis("Horizontal"));
             movementScript.SetInputY(Input.GetAxis("Vertical"));
 
@@ -38,6 +41,10 @@ public class InputHandler : NetworkBehaviour
             {
                 jumpScript.ApplyJump();
             }
+
+            //Push And Block
+            pushAndBlockScript.SetPushInput(Input.GetMouseButtonDown(0));
+            pushAndBlockScript.SetBlockInput(Input.GetMouseButton(1));
         }
     }
 
@@ -52,5 +59,15 @@ public class InputHandler : NetworkBehaviour
         {
             jumpScript.ApplyJump();
         }
+    }
+
+    public void SetBotPush(bool canPush)
+    {
+        pushAndBlockScript.SetPushInput(canPush);
+    }
+
+    public void SetBotBlock(bool canBlock)
+    {
+        pushAndBlockScript.SetBlockInput(canBlock);
     }
 }
